@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="page-with-filter"/>
+        <referenceContainer name="sidebar.main">
+            <block class="Aheadworks\Layerednav\Block\Navigation"
+                   name="catalogsearch.leftnav"
+                   before="-"
+                   template="Aheadworks_Layerednav::layer/view.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation</argument>
+                </arguments>
+                <block class="Aheadworks\Layerednav\Block\Filter\Renderer"
+                       name="catalogsearch.navigation.renderer"
+                       as="renderer"
+                       template="Aheadworks_Layerednav::layer/filter/view.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer</argument>
+                    </arguments>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Renderer"
+                           name="catalogsearch.navigation.renderer.default"
+                           as="default"
+                           template="Aheadworks_Layerednav::layer/filter/renderer/default.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\DefaultRenderer</argument>
+                        </arguments>
+                    </block>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Renderer"
+                           name="catalog.navigation.renderer.category.single.path.style"
+                           as="category_single_path_style"
+                           template="Aheadworks_Layerednav::layer/filter/renderer/category.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Category</argument>
+                        </arguments>
+                    </block>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Renderer"
+                           name="catalog.navigation.renderer.swatch"
+                           as="swatch"
+                           template="Aheadworks_Layerednav::layer/filter/renderer/swatches.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches</argument>
+                        </arguments>
+                    </block>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Renderer"
+                           name="catalog.navigation.renderer.price.manual"
+                           as="price_manual"
+                           template="Aheadworks_Layerednav::layer/filter/renderer/price_manual.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\PriceManual</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Aheadworks\Layerednav\Block\SelectedFilters"
+                   name="aw-ln.selected_filters"
+                   before="search.result"
+                   template="Aheadworks_Layerednav::layer/selected_filters.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\SelectedFilters</argument>
+                </arguments>
+                <block class="Aheadworks\Layerednav\Block\Filter\Item\Renderer"
+                       name="aw-ln.selected_filters.renderer"
+                       as="renderer"
+                       template="Aheadworks_Layerednav::layer/filter/item/view.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\SelectedFilters\FilterItemRenderer</argument>
+                    </arguments>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Item\Renderer"
+                           name="aw-ln.selected_filters.renderer.default"
+                           as="default"
+                           template="Aheadworks_Layerednav::layer/filter/item/renderer/default.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\SelectedFilters\FilterItemRenderer\DefaultRenderer</argument>
+                        </arguments>
+                    </block>
+                    <block class="Aheadworks\Layerednav\Block\Filter\Item\Renderer"
+                           name="aw-ln.selected_filters.renderer.price.manual"
+                           as="price_manual"
+                           template="Aheadworks_Layerednav::layer/filter/item/renderer/price_manual.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Aheadworks\Layerednav\ViewModel\SelectedFilters\FilterItemRenderer\DefaultRenderer</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

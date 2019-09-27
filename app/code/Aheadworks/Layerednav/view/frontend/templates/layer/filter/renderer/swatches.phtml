@@ -1,0 +1,64 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/** @var $block \Aheadworks\Layerednav\Block\Filter\Renderer */
+/** @var $filter \Aheadworks\Layerednav\Model\Layer\FilterInterface */
+/** @var \Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches $viewModel */
+$viewModel = $block->getViewModel();
+// @codingStandardsIgnoreFile
+?>
+
+<?php $swatchesData = $viewModel->getSwatchesData($filter);?>
+<?php if (!empty($swatchesData)): ?>
+    <div class="swatch-attribute swatch-layered <?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) ?>"
+         attribute-code="<?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) ?>"
+         attribute-id="<?= $block->escapeHtmlAttr($viewModel->getAttributeId($swatchesData)) ?>">
+        <div class="swatch-attribute-options items clearfix">
+            <?php foreach ($viewModel->getOptions($swatchesData) as $option => $optionViewData): ?>
+                <div id="aw-filter-option-<?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) . '-' . $block->escapeHtmlAttr($option) ?>"
+                     class="swatch-option <?= /* @noEscape */ $viewModel->getOptionClasses($optionViewData) ?> "
+                     option-type="<?= $block->escapeHtmlAttr($viewModel->getOptionSwatchesType($optionViewData)) ?>"
+                     option-id="<?= $block->escapeHtmlAttr($option) ?>"
+                     original-option-id="<?= $block->escapeHtmlAttr($viewModel->getOptionSwatchesId($optionViewData)) ?>"
+                     option-label="<?= $block->escapeHtmlAttr($viewModel->getOptionLabel($optionViewData)) ?>"
+                     option-tooltip-thumb="<?= /* @noEscape */ $viewModel->getOptionSwatchesTooltipThumb($optionViewData) ?>"
+                     option-tooltip-value="<?= /* @noEscape */ $viewModel->getOptionSwatchesTooltipValue($optionViewData) ?>"
+                     data-role="aw-layered-nav-filter-item"
+                     data-attr-code="<?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) ?>"
+                     data-mage-init='{
+                        "awLayeredNavFilterItem": {
+                            "type": "swatch",
+                            "multiSelectMode": <?= /* @noEscape */ \Zend_Json::encode($viewModel->isMultiselectAvailable($filter)) ?>
+                         }
+                     }'
+                    <?php if (!empty($customStyle = $viewModel->getOptionCustomStyle($optionViewData))): ?>
+                        style="<?= /* @noEscape */ $customStyle ?>"
+                    <?php endif; ?>
+                >
+                    <input type="hidden"
+                           name="<?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) ?>"
+                           value="<?= $block->escapeHtmlAttr($option) ?>" />
+                    <?php if ($viewModel->isNeedToDisplayOptionSwatchesValue($viewModel->getOptionSwatchesType($optionViewData))): ?>
+                        <?= $block->escapeHtml($viewModel->getOptionSwatchesValue($optionViewData)) ?>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <script>
+        require([
+            'jquery',
+            'jquery/ui',
+            'Magento_Swatches/js/swatch-renderer'
+        ], function ($) {
+            $('[data-role=aw-layered-nav-filter-item][data-attr-code=<?= $block->escapeHtmlAttr($viewModel->getAttributeCode($swatchesData)) ?>]')
+                .SwatchRendererTooltip();
+        });
+    </script>
+<?php endif; ?>
+
+
+

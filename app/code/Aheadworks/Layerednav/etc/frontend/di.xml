@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Aheadworks\Layerednav\Model\Layer\FilterList\CategoryAttributeProvider" type="Aheadworks\Layerednav\Model\Layer\FilterList\AttributeProvider">
+        <arguments>
+            <argument name="filterableAttributes" xsi:type="object">Magento\Catalog\Model\Layer\Category\FilterableAttributeList</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\Layerednav\Model\Layer\FilterList\SearchAttributeProvider" type="Aheadworks\Layerednav\Model\Layer\FilterList\AttributeProvider">
+        <arguments>
+            <argument name="filterableAttributes" xsi:type="object">Magento\Catalog\Model\Layer\Search\FilterableAttributeList</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\Layerednav\Model\Layer\FilterListCategory" type="Aheadworks\Layerednav\Model\Layer\FilterList">
+        <arguments>
+            <argument name="filterProvider" xsi:type="object">Aheadworks\Layerednav\Model\Layer\FilterList\FilterProvider\Category</argument>
+            <argument name="attributeProvider" xsi:type="object">Aheadworks\Layerednav\Model\Layer\FilterList\CategoryAttributeProvider</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\Layerednav\Model\Layer\FilterListSearch" type="Aheadworks\Layerednav\Model\Layer\FilterList">
+        <arguments>
+            <argument name="filterProvider" xsi:type="object">Aheadworks\Layerednav\Model\Layer\FilterList\FilterProvider\Search</argument>
+            <argument name="attributeProvider" xsi:type="object">Aheadworks\Layerednav\Model\Layer\FilterList\SearchAttributeProvider</argument>
+        </arguments>
+    </virtualType>
+    <type name="Aheadworks\Layerednav\Model\Layer\FilterListResolver">
+        <arguments>
+            <argument name="filterListPool" xsi:type="array">
+                <item name="category" xsi:type="string">Aheadworks\Layerednav\Model\Layer\FilterListCategory</item>
+                <item name="catalog_search" xsi:type="string">Aheadworks\Layerednav\Model\Layer\FilterListSearch</item>
+                <item name="aw_advanced_search" xsi:type="string">Aheadworks\Layerednav\Model\Layer\FilterListSearch</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Layer\DataSource\CompositeConfigProvider">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="default" xsi:type="object">Aheadworks\Layerednav\Model\Layer\DataSource\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\Layerednav\Model\Layer\Filter\Factory\DataProviderPool">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="category" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Category</item>
+                <item name="on-sale" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Custom</item>
+                <item name="new" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Custom</item>
+                <item name="in-stock" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Custom</item>
+                <item name="attribute" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Attribute</item>
+                <item name="price" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Attribute</item>
+                <item name="decimal" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Factory\Attribute</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Pool">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="category" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Category</item>
+                <item name="on-sale" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Custom</item>
+                <item name="new" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Custom</item>
+                <item name="in-stock" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Custom</item>
+                <item name="attribute" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Attribute</item>
+                <item name="price" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Price</item>
+                <item name="decimal" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DataProvider\Decimal</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Layer\Filter\Applier\Pool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="category" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Category</item>
+                <item name="on-sale" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Custom</item>
+                <item name="new" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Custom</item>
+                <item name="in-stock" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Custom</item>
+                <item name="attribute" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Attribute</item>
+                <item name="decimal" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Decimal</item>
+                <item name="price" xsi:type="object">Aheadworks\Layerednav\Model\Layer\Filter\Applier\Price</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="aw_layerednav_result_interface_plugin" type="Aheadworks\Layerednav\Plugin\Result"/>
+    </type>
+    <type name="Magento\Framework\View\Page\Config\RendererInterface">
+        <plugin name="aw_layerednav_page_config_renderer" type="Aheadworks\Layerednav\Plugin\PageConfigRenderer" sortOrder="1" />
+    </type>
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="aw_layerednav" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\App\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">15</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\App\Request\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\Layerednav\App\Request\Processor\DefaultProcessor</item>
+                <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\App\Request\Processor\ValueInsteadOfId</item>
+                <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\App\Request\Processor\ValueAsSubcategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\App\Request\MatcherPool">
+        <arguments>
+            <argument name="matchers" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\Layerednav\App\Request\Matcher\DefaultMatcher</item>
+                <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\App\Request\Matcher\ValueInsteadOfId</item>
+                <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\App\Request\Matcher\ValueAsSubcategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\App\Request\ParserPool">
+        <arguments>
+            <argument name="parsers" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\Layerednav\App\Request\Parser\DefaultParser</item>
+                <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\App\Request\Parser\ValueInsteadOfId</item>
+                <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\App\Request\Parser\ValueAsSubcategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Url\BuilderPool">
+        <arguments>
+            <argument name="urlBuilders" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\Layerednav\Model\Url\Builder\DefaultBuilder</item>
+                <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\Model\Url\Builder\ValueInsteadOfId</item>
+                <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\Model\Url\Builder\ValueAsSubcategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Url\ConverterPool">
+        <arguments>
+            <argument name="converters" xsi:type="array">
+                <item name="default" xsi:type="array">
+                    <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\DefaultConverter\ToValueInsteadOfId</item>
+                    <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\DefaultConverter\ToValueAsSubcategory</item>
+                </item>
+                <item name="value_instead_of_id" xsi:type="array">
+                    <item name="default" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\ValueInsteadOfId\ToDefault</item>
+                    <item name="value_as_subcategory" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\ValueInsteadOfId\ToValueAsSubcategory</item>
+                </item>
+                <item name="value_as_subcategory" xsi:type="array">
+                    <item name="default" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\ValueAsSubcategory\ToDefault</item>
+                    <item name="value_instead_of_id" xsi:type="string">Aheadworks\Layerednav\Model\Url\Converter\ValueAsSubcategory\ToValueInsteadOfId</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Layerednav\Model\Layer\Filter\Item\DataBuilderPool">
+        <arguments>
+            <argument name="dataBuilders" xsi:type="array">
+                <item name="default" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\DefaultDataBuilder</item>
+                <item name="label_asc" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\LabelAscDataBuilder</item>
+                <item name="label_desc" xsi:type="string">Aheadworks\Layerednav\Model\Layer\Filter\Item\LabelDescDataBuilder</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches\DataResolver\Pool">
+        <arguments>
+            <argument name="resolvers" xsi:type="array">
+                <!-- Magento\Swatches\Model\Swatch::SWATCH_TYPE_TEXTUAL -->
+                <item name="0" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches\DataResolver\Text</item>
+                <!-- Magento\Swatches\Model\Swatch::SWATCH_TYPE_VISUAL_COLOR -->
+                <item name="1" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches\DataResolver\Color</item>
+                <!-- Magento\Swatches\Model\Swatch::SWATCH_TYPE_VISUAL_IMAGE -->
+                <item name="2" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches\DataResolver\Image</item>
+                <!-- Magento\Swatches\Model\Swatch::SWATCH_TYPE_EMPTY -->
+                <item name="3" xsi:type="object">Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Swatches\DataResolver\EmptyType</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

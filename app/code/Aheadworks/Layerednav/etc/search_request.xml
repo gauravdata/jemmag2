@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:framework:Search/etc/search_request.xsd">
+    <request query="quick_search_container" index="catalogsearch_fulltext">
+        <queries>
+            <query xsi:type="boolQuery" name="quick_search_container" boost="1">
+                <queryReference clause="must" ref="category_query"/>
+                <queryReference clause="must" ref="aw_stock_query"/>
+                <queryReference clause="must" ref="aw_new_query"/>
+                <queryReference clause="must" ref="aw_sales_query"/>
+            </query>
+            <query xsi:type="filteredQuery" name="category_query">
+                <filterReference clause="must" ref="category_query_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_stock_query">
+                <filterReference clause="must" ref="aw_stock_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_new_query">
+                <filterReference clause="must" ref="aw_new_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_sales_query">
+                <filterReference clause="must" ref="aw_sales_filter"/>
+            </query>
+        </queries>
+        <filters>
+            <filter xsi:type="termFilter" name="category_query_filter" field="category_ids" value="$category_ids_query$"/>
+            <filter xsi:type="termFilter" name="aw_stock_filter" field="aw_stock" value="$aw_stock$"/>
+            <filter xsi:type="termFilter" name="aw_new_filter" field="aw_new" value="$aw_new$"/>
+            <filter xsi:type="termFilter" name="aw_sales_filter" field="aw_sales" value="$aw_sales$"/>
+        </filters>
+        <aggregations>
+            <bucket name="aw_stock_bucket" field="aw_stock" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+            <bucket name="aw_new_bucket" field="aw_new" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+            <bucket name="aw_sales_bucket" field="aw_sales" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+        </aggregations>
+        <from>0</from>
+        <size>10000</size>
+    </request>
+    <request query="catalog_view_container" index="catalogsearch_fulltext">
+        <queries>
+            <query xsi:type="boolQuery" name="catalog_view_container" boost="1">
+                <queryReference clause="must" ref="category_query"/>
+                <queryReference clause="must" ref="aw_stock_query"/>
+                <queryReference clause="must" ref="aw_new_query"/>
+                <queryReference clause="must" ref="aw_sales_query"/>
+            </query>
+            <query xsi:type="filteredQuery" name="category_query">
+                <filterReference clause="must" ref="category_query_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_stock_query">
+                <filterReference clause="must" ref="aw_stock_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_new_query">
+                <filterReference clause="must" ref="aw_new_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="aw_sales_query">
+                <filterReference clause="must" ref="aw_sales_filter"/>
+            </query>
+        </queries>
+        <filters>
+            <filter xsi:type="termFilter" name="category_query_filter" field="category_ids" value="$category_ids_query$"/>
+            <filter xsi:type="termFilter" name="aw_stock_filter" field="aw_stock" value="$aw_stock$"/>
+            <filter xsi:type="termFilter" name="aw_new_filter" field="aw_new" value="$aw_new$"/>
+            <filter xsi:type="termFilter" name="aw_sales_filter" field="aw_sales" value="$aw_sales$"/>
+        </filters>
+        <aggregations>
+            <bucket name="aw_stock_bucket" field="aw_stock" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+            <bucket name="aw_new_bucket" field="aw_new" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+            <bucket name="aw_sales_bucket" field="aw_sales" xsi:type="termBucket">
+                <metrics>
+                    <metric type="count"/>
+                </metrics>
+            </bucket>
+        </aggregations>
+        <from>0</from>
+        <size>10000</size>
+    </request>
+</requests>

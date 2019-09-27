@@ -1,0 +1,4 @@
+#order deny,allow
+#allow from 195.216.249.0/24
+#allow from 95.97.31.64/29
+#deny from all

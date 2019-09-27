@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Aheadworks\Layerednav\Model\Filter\PostDataProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="title" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\Title</item>
+                <item name="display_state" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\DisplayState</item>
+                <item name="mode" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\Mode</item>
+                <item name="sort_order" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\SortOrder</item>
+                <item name="category_mode" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\CategoryMode</item>
+                <item name="category_filter" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\CategoryFilter</item>
+                <item name="image" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\Image</item>
+                <item name="swatches" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\Swatches</item>
+                <item name="image_titles" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\ImageTitle</item>
+                <item name="native_swatches" xsi:type="object">Aheadworks\Layerednav\Model\Filter\PostDataProcessor\NativeSwatches</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\Layerednav\Ui\FilterDataProvider\ModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="title" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\Title</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="display_state" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\DisplayState</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+                <item name="mode" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\Mode</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+                <item name="sort_order" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\SortOrder</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="category" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\Category</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+                <item name="image" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\Image</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+                <item name="swatches" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\Swatches</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+                <item name="image_title" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\ImageTitle</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+                <item name="native_swatches" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\Layerednav\Ui\Component\Modifier\NativeSwatches</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Aheadworks\Layerednav\Ui\FilterDataProvider">
+        <arguments>
+            <argument name="modifierPool" xsi:type="object">Aheadworks\Layerednav\Ui\FilterDataProvider\ModifierPool</argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\Layerednav\Controller\Adminhtml\Filter\Swatch\Upload">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
+</config>

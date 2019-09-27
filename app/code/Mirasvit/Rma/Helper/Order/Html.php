@@ -1,0 +1,86 @@
+<?php
+/**
+ * Mirasvit
+ *
+ * This source file is subject to the Mirasvit Software License, which is available at https://mirasvit.com/license/.
+ * Do not edit or add to this file if you wish to upgrade the to newer versions in the future.
+ * If you wish to customize this module for your needs.
+ * Please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category  Mirasvit
+ * @package   mirasvit/module-rma
+ * @version   2.0.53
+ * @copyright Copyright (C) 2019 Mirasvit (https://mirasvit.com/)
+ */
+
+
+
+namespace Mirasvit\Rma\Helper\Order;
+
+/**
+ * Helper which creates different html code
+ */
+class Html extends \Magento\Framework\App\Helper\AbstractHelper
+{
+    public function __construct(
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
+        \Magento\Framework\App\Helper\Context $context
+    ) {
+        $this->localeDate = $localeDate;
+        $this->context = $context;
+
+        parent::__construct($context);
+    }
+
+    /**
+     * @param \Magento\Sales\Api\Data\OrderInterface $order
+     * @param bool|false $url
+     * @return string
+     */
+    public function getOrderLabel($order, $url = false)
+    {
+        if ($order->getIsOffline()) {
+            $res = $this->getOfflineLabel($order);
+        } else {
+            $res = $this->getLabel($order, $url);
+        }
+
+        return $res;
+    }
+
+    /**
+     * @param \Magento\Sales\Api\Data\OrderInterface $order
+     * @param bool|false $url
+     * @return string
+     */
+    private function getLabel($order, $url = false)
+    {
+        $res = "#{$order->getRealorderId()}";
+        if ($url) {
+            $res = "<a href='{$url}' target='_blank'>$res</a>";
+        }
+        $res .= __(
+            ' at %1 (%2)',
+            $this->localeDate->formatDate($order->getCreatedAt(), \IntlDateFormatter::MEDIUM),
+            strip_tags($order->formatPrice($order->getGrandTotal()))
+        );
+
+        return $res;
+    }
+
+    /**
+     * @param \Mirasvit\Rma\Api\Data\OfflineOrderInterface $order
+     * @param bool|false $url
+     * @return string
+     */
+    private function getOfflineLabel($order, $url = false)
+    {
+        $res = $order->getReceiptNumber();
+        if ($url) {
+            $res = "<a href='{$url}' target='_blank'>$res</a>";
+        }
+        $res .= __(' at %1', $this->localeDate->formatDate($order->getCreatedAt(), \IntlDateFormatter::MEDIUM));
+
+        return $res;
+    }
+}

@@ -1,0 +1,90 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/** @var $block \Aheadworks\Layerednav\Block\Filter\Renderer */
+/** @var $filter \Aheadworks\Layerednav\Model\Layer\FilterInterface */
+/** @var \Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\DefaultRenderer $viewModel */
+$viewModel = $block->getViewModel();
+// @codingStandardsIgnoreFile
+?>
+
+<ol class="items">
+    <?php
+    $countOfItemsToDisplay = $viewModel->getCountOfItemsToDisplay($filter->getItems());
+    $hiddenItemsCount = $viewModel->getHiddenItemsCount($countOfItemsToDisplay);
+    $currentItemIndex = 0;
+    ?>
+    <?php foreach ($filter->getItems() as $filterItem): ?>
+        <?php if ($viewModel->isNeedToShowItem($filterItem)):
+            $currentItemIndex++;
+            ?>
+            <li data-role="aw-layered-nav-filter-item"
+                class="item
+                <?php if ($viewModel->isItemHidden($currentItemIndex, $countOfItemsToDisplay)): ?> hide<?php endif; ?>
+                <?php if ($viewModel->isItemShaded($currentItemIndex, $countOfItemsToDisplay)): ?> shaded<?php endif; ?> ">
+                <input
+                        id="<?= $block->escapeHtmlAttr($viewModel->getInputId($filterItem)) ?>"
+                        type="<?= $block->escapeHtmlAttr($viewModel->isMultiselectAvailable($filterItem) ? 'checkbox' : 'radio') ?>"
+                        name="<?= $block->escapeHtmlAttr($filter->getCode()) ?>"
+                        value="<?= $block->escapeHtmlAttr($viewModel->getFilterItemValue($filterItem)) ?>"
+                        <?= $viewModel->isActiveItem($filterItem) ? $block->escapeHtmlAttr('checked') : '' ?>
+                        <?= $viewModel->isItemDisabled($filterItem) ? $block->escapeHtmlAttr('disabled') : '' ?>
+                        data-mage-init='{
+                            "awLayeredNavFilterItem":
+                                {
+                                    "backendType": <?= /* @noEscape */ \Zend_Json::encode($viewModel->getBackendType($filterItem)) ?>,
+                                    "multiSelectMode": <?= /* @noEscape */ \Zend_Json::encode($viewModel->isMultiselectAvailable($filterItem)) ?>
+                                }
+                            }'
+                        data-role="aw-layered-nav-filter-item"
+                />
+                <?php if ($viewModel->isNeedToShowFilterItemImage($filter)): ?>
+                    <div class="image<?= /* @noEscape */ $viewModel->getFilterItemImageCustomClass($filterItem) ?>"
+                         style="<?= /* @noEscape */ $viewModel->getFilterItemImageCustomStyle($filterItem) ?>"
+                         data-role="aw-layered-nav-filter-item-image-<?= $block->escapeHtmlAttr($filter->getCode()) ?>"
+                         option-type="<?= /* @noEscape */ $viewModel->getTooltipOptionType($filterItem) ?>"
+                         option-label="<?= /* @noEscape */ __($filterItem->getLabel()) ?>"
+                         option-tooltip-thumb="<?= /* @noEscape */ $viewModel->getTooltipOptionThumb($filterItem) ?>"
+                         option-tooltip-value="<?= /* @noEscape */ $viewModel->getTooltipOptionValue($filterItem) ?>"
+                    >
+                        <?php if (!empty($viewModel->getFilterItemImageUrl($filterItem))): ?>
+                            <img src="<?= $block->escapeUrl($viewModel->getFilterItemImageUrl($filterItem)) ?>"
+                                 alt="<?= /* @noEscape */ __($filterItem->getLabel()) ?>"/>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($viewModel->isNeedToShowFilterItemLabel($filter)): ?>
+                    <label for="<?= $block->escapeHtmlAttr($viewModel->getInputId($filterItem)) ?>">
+                        <?= /* @noEscape */ __($filterItem->getLabel()) ?>
+                    </label>
+                <?php endif; ?>
+                <?php if ($viewModel->isNeedToShowProductsCount($filterItem)): ?>
+                    <span class="count"><?= $block->escapeHtml($filterItem->getCount()) ?></span>
+                <?php endif; ?>
+            </li>
+        <?php endif; ?>
+    <?php endforeach ?>
+    <?php if ($hiddenItemsCount > 0): ?>
+        <li class="item show-more">
+            <span class="show" id="aw-layered-nav-collapse-show-<?= $block->escapeHtmlAttr($filter->getCode()) ?>">
+                <?= $block->escapeHtml(__('show %1 more', $hiddenItemsCount)) ?>
+            </span>
+            <span class="hide" id="aw-layered-nav-collapse-hide-<?= $block->escapeHtmlAttr($filter->getCode()) ?>">
+                <?= $block->escapeHtml(__('show less')) ?>
+            </span>
+        </li>
+    <?php endif; ?>
+    <script>
+        require([
+            'jquery',
+            'jquery/ui',
+            'Magento_Swatches/js/swatch-renderer'
+        ], function ($) {
+            $('[data-role=aw-layered-nav-filter-item-image-<?= $block->escapeHtmlAttr($filter->getCode()) ?>]')
+                .SwatchRendererTooltip( { tooltipClass: 'swatch-option-tooltip aw-ln-swatch' } );
+        });
+    </script>
+</ol>

@@ -1,0 +1,44 @@
+<?php
+/* @var $block \Mirasvit\Rma\Block\Rma\View\History */
+$messages   = $block->getMessages();
+$isCustomer = 0;
+?>
+<?php if (count($messages)): ?>
+    <div class="mst-rma-box _half mst-rma__history">
+        <div class="mst-rma-box__title"><?= __('RMA History') ?></div>
+        <div class="mst-rma-box__content">
+            <?php foreach ($messages as $message): ?>
+                <div class="mst-rma__message <?php if ($message->getCustomerName()): ?>__customer<?php else: ?>__user<?php endif ?>">
+                    <div class="mst-rma__message-title">
+                        <?php if ($message->getCustomerName()): ?>
+                            <?php $isCustomer = 1; ?>
+                            <strong><?= $block->escapeHtml($message->getCustomerName()) ?></strong>
+                        <?php elseif (($user = $block->getUser($message)) && trim($user->getName())): ?>
+                            <?php $isCustomer = 0; ?>
+                            <strong><?= $block->escapeHtml($user->getName()) ?></strong>
+                        <?php endif ?>
+
+                        <i><?= $block->formatDate($message->getCreatedAt(), \IntlDateFormatter::MEDIUM) ?> <?= $block->formatTime($message->getCreatedAt(), \IntlDateFormatter::SHORT) ?></i>
+                    </div>
+
+                    <div class="mst-rma__message-body">
+                        <?php if ($isCustomer): ?>
+                            <?= $block->escapeHtml($block->getTextHtml($message), ['br']) ?>
+                        <?php else: ?>
+                            <?= $block->getTextHtml($message) ?>
+                        <?php endif ?>
+
+                        <?php if ($attachments = $block->getAttachments($message)): ?>
+                            <?php foreach ($attachments as $attachment): ?>
+                                <br>
+                                <a href="<?= $block->getAttachmentUrl($attachment) ?>">
+                                    <?= $block->escapeHtml($attachment->getName()) ?>
+                                </a>
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>
+<?php endif ?>

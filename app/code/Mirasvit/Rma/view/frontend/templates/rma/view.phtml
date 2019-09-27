@@ -1,0 +1,48 @@
+<?php
+/* @var $block \Mirasvit\Rma\Block\Rma\View */
+$rma      = $block->getRma();
+$orders   = $block->getOrders();
+$progress = $block->getProgress();
+?>
+<div class="mst-rma-view">
+    <?php if ($progress): ?>
+        <div style="display: flex; justify-content: center;">
+            <ul class="opc-progress-bar">
+                <?php foreach ($progress as $item): ?>
+                    <li class="opc-progress-bar-item <?php if ($item['active']): ?>_active<?php endif ?>">
+                        <span><?= $item['label'] ?></span>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    <?php endif ?>
+
+    <?= $block->getChildHtml('rma.view.buttons') ?>
+
+    <?= $block->getChildHtml('rma.view.info') ?>
+
+    <?php foreach ($orders as $order): ?>
+        <?php if ($order): ?>
+            <div class="mst-rma-box _no-border">
+                <div class="mst-rma-box__title">
+                    <?= __('Items RMA Requested for %1', $block->escapeHtml($block->getOrderLabel($order))) ?>
+                </div>
+
+                <div class="mst-rma-box__content">
+                    <?php
+                    $itemsBlock = $order->getIsOffline()
+                        ? $block->getChildBlock('rma.view.offline.items')
+                        : $block->getChildBlock('rma.view.items');
+                    $itemsBlock->setOrder($order);
+                    ?>
+                    <?= $itemsBlock->toHtml() ?>
+                </div>
+            </div>
+        <?php endif ?>
+    <?php endforeach ?>
+
+    <div class="mst-rma-block _align-top">
+        <?= $block->getChildHtml('rma.view.message') ?>
+        <?= $block->getChildHtml('rma.view.history') ?>
+    </div>
+</div>

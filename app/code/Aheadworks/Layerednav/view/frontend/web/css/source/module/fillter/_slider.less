@@ -1,0 +1,121 @@
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-ln-range-slider-wrapper {
+    .aw-ln-input-value {
+      width: 25%;
+    }
+
+    .aw-ln-range-slider {
+      width: 96%;
+      margin-left: 2%;
+      margin-bottom: 15px;
+    }
+
+    .ui-slider-handle {
+      background: @slider_handle__color;
+      border: 1px solid @slider_handle_border__color;
+      border-radius: 2px;
+      height: 16px;
+      margin-left: -8px;
+      margin-right: 0;
+      padding: 0;
+      top: -4px;
+      width: 16px;
+      cursor: pointer;
+
+      &:hover {
+        background: @slider_handle__hover__color;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        border-top: 1px solid;
+        border-right: 1px solid;
+        height: 8px;
+        width: 8px;
+        margin: 3px 0 0 1px;
+        transform: rotate(45deg);
+      }
+
+      &+.ui-slider-handle::before {
+        border: none;
+        border-bottom: 1px solid;
+        border-left: 1px solid;
+        margin: 3px 0 0 6px;
+      }
+    }
+
+    .ui-slider-range {
+      background: @slider_range__color;
+      position: absolute;
+      height: 100%;
+    }
+
+    .aw-ln-field-value-wrapper {
+      margin-top: 10px;
+      -webkit-box-pack: start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      .lib-vendor-box-align(center);
+      .lib-vendor-prefix-display();
+
+      label {
+        width: 40%;
+      }
+
+      input {
+        width: 25%;
+      }
+
+      .aw-ln-field-label {
+        .lib-vendor-prefix-order(1);
+      }
+
+      .currency-symbol {
+        margin-left: 4px;
+        margin-right: 4px;
+
+        &.before-input {
+          .lib-vendor-prefix-order(2);
+        }
+
+        &.after-input {
+          .lib-vendor-prefix-order(4);
+        }
+      }
+
+      .aw-ln-input-value {
+        .lib-vendor-prefix-order(3);
+      }
+    }
+
+    .aw-ln-slider-button {
+      margin-top: 15px;
+    }
+
+    .aw-ln-slider-filter-info {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

@@ -1,0 +1,5 @@
+<div class="aw-reviewreminder-grid-cell link" if="hasLink($row())">
+    <a href="#" data-bind="attr: {href: getUrl($row())},
+                           text: getName($row())"></a>
+</div>
+<div class="data-grid-cell-content" text="$col.getLabel($row())" if="!hasLink($row())" />

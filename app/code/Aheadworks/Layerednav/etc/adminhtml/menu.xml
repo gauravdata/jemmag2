@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Aheadworks_Layerednav::home" title="Layered Navigation by Aheadworks" module="Aheadworks_Layerednav" sortOrder="100" parent="Magento_Catalog::catalog" resource="Aheadworks_Layerednav::home"/>
+        <add id="Aheadworks_Layerednav::filters" title="Manage Filters" module="Aheadworks_Layerednav" sortOrder="10" parent="Aheadworks_Layerednav::home" action="aw_layerednav/filter/index" resource="Aheadworks_Layerednav::filters"/>
+    </menu>
+</config>

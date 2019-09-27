@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<config>
+    <extension_attributes for="Aheadworks\Layerednav\Api\Data\FilterInterface">
+        <attribute code="filter_mode" type="Aheadworks\Layerednav\Api\Data\Filter\ModeInterface" />
+        <attribute code="swatches" type="Aheadworks\Layerednav\Api\Data\Filter\SwatchInterface[]" />
+        <attribute code="native_visual_swatches" type="Aheadworks\Layerednav\Api\Data\Filter\SwatchInterface[]" />
+    </extension_attributes>
+</config>

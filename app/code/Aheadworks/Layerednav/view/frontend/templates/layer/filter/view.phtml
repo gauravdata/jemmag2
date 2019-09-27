@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/** @var $block \Aheadworks\Layerednav\Block\Filter\Renderer */
+/** @var $filter \Aheadworks\Layerednav\Model\Layer\FilterInterface */
+/** @var \Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer $viewModel */
+$viewModel = $block->getViewModel();
+
+$renderType = $viewModel->getRenderType($filter);
+$filterRenderer = $viewModel->getRendererBlock($block->getLayout(), $block->getNameInLayout(), $renderType);
+// @codingStandardsIgnoreFile
+?>
+<?= /* @noEscape */ $filterRenderer ? $filterRenderer->render($filter) : '' ?>

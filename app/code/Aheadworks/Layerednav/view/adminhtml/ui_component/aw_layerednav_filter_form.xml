@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+*/
+-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_layerednav_filter_form.aw_layerednav_filter_form_data_source</item>
+            <item name="deps" xsi:type="string">aw_layerednav_filter_form.aw_layerednav_filter_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Filter</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">aw_layerednav_filter_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="array">
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
+                <item name="class" xsi:type="string">back</item>
+                <item name="url" xsi:type="string">*/*/</item>
+            </item>
+            <item name="reset" xsi:type="string">Aheadworks\Layerednav\Block\Adminhtml\Filter\Edit\Button\Reset</item>
+            <item name="save" xsi:type="string">Aheadworks\Layerednav\Block\Adminhtml\Filter\Edit\Button\Save</item>
+            <item name="save_and_continue" xsi:type="string">Aheadworks\Layerednav\Block\Adminhtml\Filter\Edit\Button\SaveAndContinue</item>
+        </item>
+    </argument>
+    <dataSource name="aw_layerednav_filter_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\Layerednav\Ui\FilterDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_layerednav_filter_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="requestScopeFieldName" xsi:type="string">store</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="aw_layerednav/filter/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General Settings</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="source" xsi:type="string">filter</item>
+                </item>
+            </argument>
+        </field>
+        <container name="filter_title_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <field name="title">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Filter Title</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">title</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_title_checkbox" class="Aheadworks\Layerednav\Ui\Component\Form\Field\DefaultCheckbox">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_title_checkbox</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = title :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <field name="is_filterable" class="Aheadworks\Layerednav\Ui\Component\Form\Field\IsFilterableField">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\FilterableOptions</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Use in Layered Navigation</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataScope" xsi:type="string">is_filterable</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_filterable_in_search" class="Aheadworks\Layerednav\Ui\Component\Form\Field\IsFilterableField">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Use in Search Results Layered Navigation</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="dataScope" xsi:type="string">is_filterable_in_search</item>
+                </item>
+            </argument>
+        </field>
+        <field name="position" class="Aheadworks\Layerednav\Ui\Component\Form\Field\GlobalScopeField">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Position</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataScope" xsi:type="string">position</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-digits" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <container name="filter_state_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <field name="display_state">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Config\Source\FilterDisplayState</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Default filter state</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">display_state</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_display_state">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_display_state</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = display_state :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="filter_mode_group" class="Aheadworks\Layerednav\Ui\Component\Form\FilterModeContainer">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+            <field name="filter_mode">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Config\Source\FilterMode</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Filter mode</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="default" xsi:type="string">multi-select</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">filter_mode</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_filter_mode">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_filter_mode</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = filter_mode :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="category_list_style_group" class="Aheadworks\Layerednav\Ui\Component\Form\CategoryListStyleContainer">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="category_list_style">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\CategoryListStyles</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Category list style</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">category_list_style</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_category_list_style" class="Aheadworks\Layerednav\Ui\Component\Form\Field\DefaultCheckbox">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_category_list_style</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = category_list_style :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="filter_sort_order_group" class="Aheadworks\Layerednav\Ui\Component\Form\SortOrderContainer">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+            <field name="sort_order">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\SortOrders</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Sort by</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">sort_order</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_sort_order" class="Aheadworks\Layerednav\Ui\Component\Form\Field\DefaultCheckbox">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_sort_order</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = sort_order :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="category_fieldset" class="Aheadworks\Layerednav\Ui\Component\Form\GlobalScopeFieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Categories</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="category_mode">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\CategoryModes</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Select categories where to display the filter</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">category_mode</item>
+                    <item name="switcherConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">true</item>
+                        <item name="rules" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_layerednav_filter_form.aw_layerednav_filter_form.category_fieldset.exclude_categories_container.exclude_category_ids</item>
+                                        <item name="callback" xsi:type="string">hide</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">2</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_layerednav_filter_form.aw_layerednav_filter_form.category_fieldset.exclude_categories_container.exclude_category_ids</item>
+                                        <item name="callback" xsi:type="string">hide</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item name="value" xsi:type="number">3</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_layerednav_filter_form.aw_layerednav_filter_form.category_fieldset.exclude_categories_container.exclude_category_ids</item>
+                                        <item name="callback" xsi:type="string">show</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <container name="exclude_categories_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string"></item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="componentType" xsi:type="string">container</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <field name="exclude_category_ids">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\CategoryTree</item>
+                    <item name="config" xsi:type="array">
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="componentType" xsi:type="string">field</item>
+                        <item name="component" xsi:type="string">Aheadworks_Layerednav/js/ui/form/elements/ui-select</item>
+                        <item name="filterOptions" xsi:type="boolean">true</item>
+                        <item name="chipsEnabled" xsi:type="boolean">true</item>
+                        <item name="disableLabel" xsi:type="boolean">true</item>
+                        <item name="levelsVisibility" xsi:type="string">1</item>
+                        <item name="elementTmpl" xsi:type="string">Aheadworks_Layerednav/ui/form/elements/ui-select</item>
+                        <item name="dataScope" xsi:type="string">exclude_category_ids</item>
+                        <item name="sortOrder" xsi:type="string">10</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="frontend_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Frontend</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="image" class="Aheadworks\Layerednav\Ui\Component\Form\Field\Image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="componentType" xsi:type="string">fileUploader</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/file-uploader</item>
+                    <item name="template" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="source" xsi:type="string">filter</item>
+                    <item name="maxFileSize" xsi:type="number">2097152</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="string">aw_layerednav/filter_image/upload</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </field>
+        <container name="image_title_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="sortOrder" xsi:type="number">15</item>
+                </item>
+            </argument>
+            <field name="image_title">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Image title</item>
+                        <item name="scopeLabel" xsi:type="string" translate="true">[STORE VIEW]</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="source" xsi:type="string">filter</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataScope" xsi:type="string">image_title</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="default_image_title">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataScope" xsi:type="string">default_image_title</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = image_title :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="notice_for_text_swatches_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="template" xsi:type="string">Aheadworks_Layerednav/ui/message</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.are_text_swatches_used</item>
+                        <item name="label" xsi:type="string">${ $.provider }:data.text_swatches_notice</item>
+                    </item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                </item>
+            </argument>
+        </container>
+    </fieldset>
+    <fieldset name="swatches_fieldset" class="Aheadworks\Layerednav\Ui\Component\Form\SwatchesFieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Manage swatches</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">40</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="imports" xsi:type="array">
+                    <item name="visible" xsi:type="string">${ $.provider }:data.are_swatches_allowed</item>
+                </item>
+            </item>
+        </argument>
+        <field name="swatches_view_mode" class="Aheadworks\Layerednav\Ui\Component\Form\Field\GlobalScopeField">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\Layerednav\Model\Source\Filter\SwatchesMode</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">View mode</item>
+                    <item name="scopeLabel" xsi:type="string" translate="true">[GLOBAL]</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">filter</item>
+<!--                    Aheadworks\Layerednav\Model\Source\Filter\SwatchesMode::TITLE_ONLY-->
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="disabled" xsi:type="string">${ $.provider }:data.is_swatches_view_mode_selector_disabled</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">swatches_view_mode</item>
+                </item>
+            </argument>
+        </field>
+        <dynamicRows name="swatches">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                    <item name="template" xsi:type="string">ui/dynamic-rows/templates/default</item>
+                    <item name="defaultRecord" xsi:type="boolean">false</item>
+                    <item name="pageSize" xsi:type="string">100</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.are_extra_swatches_visible</item>
+                    </item>
+                    <item name="addButtonLabel" xsi:type="string" translate="true">Add Swatch</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide swatch-visual-options-container</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <container name="record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/record</item>
+                        <item name="positionProvider" xsi:type="string">sort_order</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="is_default">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">boolean</item>
+                            <item name="dataScope" xsi:type="string">is_default</item>
+                            <item name="formElement" xsi:type="string">checkbox</item>
+                            <item name="prefer" xsi:type="string">radio</item>
+                            <item name="component" xsi:type="string">Magento_Bundle/js/components/bundle-checkbox</item>
+                            <item name="parentContainer" xsi:type="string">swatches_fieldset</item>
+                            <item name="parentSelections" xsi:type="string">swatches</item>
+                            <item name="value" xsi:type="string">0</item>
+                            <item name="valueMap" xsi:type="array">
+                                <item name="true" xsi:type="string">1</item>
+                                <item name="false" xsi:type="string">0</item>
+                            </item>
+                            <item name="label" xsi:type="string" translate="true">Is Default</item>
+                            <item name="columnsHeaderClasses" xsi:type="string">control-table-options-th</item>
+                            <item name="additionalClasses" xsi:type="string">control-table-options-cell</item>
+                            <item name="sortOrder" xsi:type="number">10</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="swatch">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="component" xsi:type="string">Aheadworks_Layerednav/js/ui/form/elements/swatch-visual</item>
+                            <item name="template" xsi:type="string">Aheadworks_Layerednav/ui/form/elements/swatch-visual</item>
+                            <item name="uploadUrl" xsi:type="url" path="aw_layerednav/filter_swatch/upload"/>
+                            <item name="prefixName" xsi:type="string">swatch.value</item>
+                            <item name="prefixElementName" xsi:type="string">option_</item>
+                            <item name="imports" xsi:type="array">
+                                <item name="backgroundColor" xsi:type="string">${$.provider}:${ $.parentScope }.swatch_color</item>
+                                <item name="imageUrl" xsi:type="string">${$.provider}:${ $.parentScope }.swatch_url</item>
+                            </item>
+                            <item name="label" xsi:type="string" translate="true">Swatch</item>
+                            <item name="additionalClasses" xsi:type="string">swatches-visual-col</item>
+                            <item name="sortOrder" xsi:type="number">20</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="sort_order">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">80</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="id">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">81</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="option_id">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">82</item>
+                        </item>
+                    </argument>
+                </field>
+<!--                Uncomment in case if need to remove attribute options -->
+<!--                <actionDelete>-->
+<!--                    <argument name="data" xsi:type="array">-->
+<!--                        <item name="config" xsi:type="array">-->
+<!--                            <item name="fit" xsi:type="boolean">true</item>-->
+<!--                            <item name="sortOrder" xsi:type="number">90</item>-->
+<!--                            <item name="dataType" xsi:type="string">text</item>-->
+<!--                            <item name="additionalClasses" xsi:type="string">action_delete_button</item>-->
+<!--                        </item>-->
+<!--                    </argument>-->
+<!--                </actionDelete>-->
+            </container>
+        </dynamicRows>
+        <dynamicRows name="native_visual_swatches">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">dynamicRows</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/dynamic-rows</item>
+                    <item name="template" xsi:type="string">ui/dynamic-rows/templates/default</item>
+                    <item name="defaultRecord" xsi:type="boolean">false</item>
+                    <item name="pageSize" xsi:type="string">100</item>
+                    <item name="dndConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.are_native_visual_swatches_visible</item>
+                    </item>
+                    <item name="addButtonLabel" xsi:type="string" translate="true">Add Swatch</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide swatch-visual-options-container</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+            <container name="record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="component" xsi:type="string">Magento_Ui/js/dynamic-rows/record</item>
+                        <item name="positionProvider" xsi:type="string">sort_order</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="is_default">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">boolean</item>
+                            <item name="dataScope" xsi:type="string">is_default</item>
+                            <item name="formElement" xsi:type="string">checkbox</item>
+                            <item name="prefer" xsi:type="string">radio</item>
+                            <item name="component" xsi:type="string">Magento_Bundle/js/components/bundle-checkbox</item>
+                            <item name="parentContainer" xsi:type="string">swatches_fieldset</item>
+                            <item name="parentSelections" xsi:type="string">swatches</item>
+                            <item name="value" xsi:type="string">0</item>
+                            <item name="valueMap" xsi:type="array">
+                                <item name="true" xsi:type="string">1</item>
+                                <item name="false" xsi:type="string">0</item>
+                            </item>
+                            <item name="label" xsi:type="string" translate="true">Is Default</item>
+                            <item name="columnsHeaderClasses" xsi:type="string">control-table-options-th</item>
+                            <item name="additionalClasses" xsi:type="string">control-table-options-cell</item>
+                            <item name="sortOrder" xsi:type="number">10</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="swatch">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="component" xsi:type="string">Aheadworks_Layerednav/js/ui/form/elements/swatch-visual</item>
+                            <item name="template" xsi:type="string">Aheadworks_Layerednav/ui/form/elements/swatch-visual</item>
+                            <item name="uploadUrl" xsi:type="url" path="swatches/iframe/show"/>
+                            <item name="prefixName" xsi:type="string">swatch.value</item>
+                            <item name="prefixElementName" xsi:type="string">option_</item>
+                            <item name="imports" xsi:type="array">
+                                <item name="backgroundColor" xsi:type="string">${$.provider}:${ $.parentScope }.swatch_color</item>
+                                <item name="imageUrl" xsi:type="string">${$.provider}:${ $.parentScope }.swatch_url</item>
+                            </item>
+                            <item name="label" xsi:type="string" translate="true">Swatch</item>
+                            <item name="additionalClasses" xsi:type="string">swatches-visual-col</item>
+                            <item name="sortOrder" xsi:type="number">20</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="sort_order">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">80</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="id">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">81</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="option_id">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="visible" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="number">82</item>
+                        </item>
+                    </argument>
+                </field>
+<!--                Uncomment in case if need to remove attribute native visual swatch options-->
+<!--                <actionDelete>-->
+<!--                    <argument name="data" xsi:type="array">-->
+<!--                        <item name="config" xsi:type="array">-->
+<!--                            <item name="fit" xsi:type="boolean">true</item>-->
+<!--                            <item name="sortOrder" xsi:type="number">90</item>-->
+<!--                            <item name="dataType" xsi:type="string">text</item>-->
+<!--                            <item name="additionalClasses" xsi:type="string">action_delete_button</item>-->
+<!--                        </item>-->
+<!--                    </argument>-->
+<!--                </actionDelete>-->
+            </container>
+        </dynamicRows>
+    </fieldset>
+</form>

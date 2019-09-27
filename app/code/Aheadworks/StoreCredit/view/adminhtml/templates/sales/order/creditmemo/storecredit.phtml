@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block \Aheadworks\StoreCredit\Block\Adminhtml\Sales\Order\Creditmemo\StoreCredit */
+?>
+<?php if ($block->canRefund()): ?>
+    <div class="admin__field admin__field-option field-refund-to-store-credit">
+        <input type="checkbox" class="admin__control-checkbox"
+               id="creditmemo_refund_to_store_credit_enable"
+               name="creditmemo[refund_to_store_credit_enable]"
+               value="1"
+               <?php /* @noEscape */  echo $block->isStoreCreditRefundAutomatically() ? 'checked="checked"' : '' ?>/>
+        <label for="creditmemo_refund_to_store_credit_enable" class="admin__field-label">
+            <span><?php echo $block->escapeHtml(__('Refund to Store Credit')) ?></span>
+        </label>
+        <input type="text" class="input-text admin__control-text not-negative-amount"
+               id="creditmemo_refund_to_store_credit"
+               name="creditmemo[refund_to_store_credit]"
+               value="<?php /* @noEscape */ echo $block->getRefundToStoreCredit() ?>"/>
+        <script>
+            require(['prototype'], function() {
+                //<![CDATA[
+                toggleRefundedToStoreCredit = function() {
+                    if ($('creditmemo_refund_to_store_credit_enable').checked) {
+                        $('creditmemo_refund_to_store_credit').disabled = false;
+                    } else {
+                        $('creditmemo_refund_to_store_credit').disabled = true;
+                    }
+                }
+                Event.observe($('creditmemo_refund_to_store_credit_enable'), 'change', toggleRefundedToStoreCredit);
+                toggleRefundedToStoreCredit();
+                //]]>
+            });
+        </script>
+    </div>
+<?php endif; ?>

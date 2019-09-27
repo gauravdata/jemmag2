@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/* @var $block \Aheadworks\Layerednav\Block\SelectedFilters */
+/** @var \Aheadworks\Layerednav\ViewModel\SelectedFilters $viewModel */
+$viewModel = $block->getViewModel();
+$filterItemRenderer = $block->getFilterItemRendererBlock();
+// @codingStandardsIgnoreFile
+?>
+<?php if ($viewModel->isNeedToRender()): ?>
+    <div id="layered-selected-filters-block"
+         data-role="aw-layered-nav-selected-filters"
+         data-mage-init='{"awLayeredNavSelectedFilters": {}}'>
+        <ul class="selected-items-list">
+            <?php foreach ($viewModel->getActiveFilterItems() as $activeFilterItem): ?>
+                <?= /* @noEscape */ $filterItemRenderer ? $filterItemRenderer->render($activeFilterItem) : '' ?>
+            <?php endforeach; ?>
+            <li class="selected-item">
+                <a class="action-clear" href="#" data-role="clear-button">
+                    <span><?= $block->escapeHtml(__('Clear All')) ?></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>

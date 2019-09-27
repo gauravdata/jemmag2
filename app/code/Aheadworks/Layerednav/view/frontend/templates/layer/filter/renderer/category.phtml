@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/** @var $block \Aheadworks\Layerednav\Block\Filter\Renderer */
+/** @var $filter \Aheadworks\Layerednav\Model\Layer\FilterInterface */
+/** @var \Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\Category $viewModel */
+$viewModel = $block->getViewModel();
+// @codingStandardsIgnoreFile
+?>
+
+<ol class="categories">
+    <?php foreach ($viewModel->getCurrentCategoryPathData() as $categoryIndex => $categoryData): ?>
+        <li class="category <?= $block->escapeHtmlAttr($viewModel->getCategoryClasses($categoryIndex)) ?>">
+            <a href="<?= $block->escapeUrl($viewModel->getCategoryLink($categoryData)); ?>"
+                <?php if ($viewModel->isCurrentCategory($categoryIndex)): ?>
+                    data-mage-init='{"awLayeredNavFilterReset": {"params":["<?= $block->escapeHtml($filter->getCode()) ?>"]}}'
+                <?php endif ?>
+            >
+                <span class="label"><?= $block->escapeHtml($viewModel->getCategoryLabel($categoryData)) ?></span>
+            </a>
+        </li>
+    <?php endforeach; ?>
+    <ol class="items">
+        <?php
+        $countOfItemsToDisplay = $viewModel->getCountOfItemsToDisplay($filter->getItems());
+        $hiddenItemsCount = $viewModel->getHiddenItemsCount($countOfItemsToDisplay);
+        $currentItemIndex = 0;
+        ?>
+        <?php foreach ($filter->getItems() as $filterItem): ?>
+            <?php
+            $filterCode = $filterItem->getFilter()->getCode();
+            $value = $filterItem->getValue();
+            $htmlId = 'aw-filter-option-' . $filterCode . '-' . $value;
+            ?>
+            <?php if ($viewModel->isNeedToShowItem($filterItem)):
+                $currentItemIndex++;
+                ?>
+                <li class="item
+                    <?php if ($viewModel->isItemHidden($currentItemIndex, $countOfItemsToDisplay)): ?> hide<?php endif; ?>
+                    <?php if ($viewModel->isItemShaded($currentItemIndex, $countOfItemsToDisplay)): ?> shaded<?php endif; ?> ">
+
+                    <?php if ($viewModel->hasChildrenCategories($filterItem->getValue())) : ?>
+                        <a class="subcategory" href="<?= $block->escapeUrl($viewModel->getCategoryUrl($filterItem->getValue())) ?>">
+                            <span class="label"><?= $block->escapeHtml(__($filterItem->getLabel())) ?></span>
+                        </a>
+                    <?php else: ?>
+                        <input
+                                id="<?= $block->escapeHtmlAttr($htmlId) ?>"
+                                type="radio"
+                                name="<?= $block->escapeHtmlAttr($filterCode) ?>"
+                                value="<?= $block->escapeHtmlAttr($value) ?>"
+                                <?= $viewModel->isActiveItem($filterItem) ? $block->escapeHtmlAttr('checked') : '' ?>
+                                <?= $viewModel->isItemDisabled($filterItem) ? $block->escapeHtmlAttr('disabled') : '' ?>
+                                data-mage-init='{"awLayeredNavFilterItem": {"type": "category","multiSelectMode":false}}'
+                                data-role="aw-layered-nav-filter-item"
+                        />
+                        <label for="<?= $block->escapeHtmlAttr($htmlId) ?>"><?= $block->escapeHtml(__($filterItem->getLabel())) ?></label>
+                    <?php endif; ?>
+                </li>
+            <?php endif; ?>
+        <?php endforeach ?>
+        <?php if ($hiddenItemsCount > 0): ?>
+            <li class="item show-more">
+                <span class="show" id="aw-layered-nav-collapse-show-<?= $block->escapeHtmlAttr($filterCode) ?>">
+                    <?= $block->escapeHtml(__('show %1 more', $hiddenItemsCount)) ?>
+                </span>
+                <span class="hide" id="aw-layered-nav-collapse-hide-<?= $block->escapeHtmlAttr($filterCode) ?>">
+                    <?= $block->escapeHtml(__('show less')) ?>
+                </span>
+            </li>
+        <?php endif; ?>
+    </ol>
+</ol>
+

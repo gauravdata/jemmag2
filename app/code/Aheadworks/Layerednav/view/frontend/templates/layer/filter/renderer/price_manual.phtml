@@ -1,0 +1,73 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+See LICENSE.txt for license details.
+ */
+
+/** @var $block \Aheadworks\Layerednav\Block\Filter\Renderer */
+/** @var $filter \Aheadworks\Layerednav\Model\Layer\FilterInterface */
+/** @var \Aheadworks\Layerednav\ViewModel\Navigation\FilterRenderer\PriceManual $viewModel */
+$viewModel = $block->getViewModel();
+// @codingStandardsIgnoreFile
+
+$priceData = $viewModel->getPriceData($filter);
+?>
+
+<div class="aw-ln-range-slider-wrapper">
+    <div class="aw-ln-slider-filter-info" style="<?= /* @noEscape */ $viewModel->isFilterLabelEnabled() ? '' : 'display: none;'; ?>">
+        <?= $block->escapeHtml(__('From'))?>
+        <span data-role="aw-layered-nav-price-label-from"></span>
+        <?= $block->escapeHtml(__('to'))?>
+        <span data-role="aw-layered-nav-price-label-to"></span>
+    </div>
+    <div
+        id="slider-range"
+        class="aw-ln-range-slider"
+        style="<?= /* @noEscape */ $viewModel->isPriceSliderEnabled() ? '' : 'display: none;'; ?>"
+        data-mage-init='{
+        "awLayeredNavPriceSlider": {
+            "range": true,
+            "submitOnValueChange": <?= /* @noEscape */ $viewModel->isFilterButtonDisabled() ? 'true' : 'false' ?>,
+            "min": <?= $block->escapeHtml($viewModel->getMinPrice($priceData)) ?>,
+            "max": <?= $block->escapeHtml($viewModel->getMaxPrice($priceData)) ?>,
+            <?php if ($viewModel->isNeedToSetDiscreteStepForSlider()): ?>
+                "step": <?= $block->escapeHtml($viewModel->getStepForSlider($priceData)) ?>,
+            <?php endif; ?>
+            "priceFormat": <?= /* @noEscape */ \Zend_Json::encode($viewModel->getPriceFormat()) ?>,
+            "values": [
+                <?= $block->escapeHtml($viewModel->getFromPrice($priceData)) ?>,
+                <?= $block->escapeHtml($viewModel->getToPrice($priceData)) ?>
+             ]
+        }
+    }'></div>
+    <div class="aw-ln-inputs-wrapper" style="<?= /* @noEscape */ $viewModel->areFromToInputsEnabled() ? '' : 'display: none;' ?>">
+        <div class="aw-ln-field-value-wrapper">
+            <label for="price_from" class="aw-ln-field-label">
+                <span><?= $block->escapeHtml(__('From')); ?></span>
+            </label>
+            <?php if ($viewModel->isNeedToDisplayCurrencySymbol()): ?>
+                <span class="currency-symbol <?= /* @noEscape */ $viewModel->isNeedToDisplayCurrencySymbolAfterValue() ? 'after-input' : 'before-input' ?>">
+                    <?= /* @noEscape */ $viewModel->getCurrencySymbol() ?>
+                </span>
+            <?php endif; ?>
+            <input type="text" class="aw-ln-input-value" id="price_from" data-role="aw-layered-nav-price-from">
+        </div>
+        <div class="aw-ln-field-value-wrapper">
+            <label for="price_to" class="aw-ln-field-label">
+                <span><?= $block->escapeHtml(__('To')); ?></span>
+            </label>
+            <?php if ($viewModel->isNeedToDisplayCurrencySymbol()): ?>
+                <span class="currency-symbol <?= /* @noEscape */ $viewModel->isNeedToDisplayCurrencySymbolAfterValue() ? 'after-input' : 'before-input' ?>">
+                    <?= /* @noEscape */ $viewModel->getCurrencySymbol() ?>
+                </span>
+            <?php endif; ?>
+            <input type="text" class="aw-ln-input-value" id="price_to" data-role="aw-layered-nav-price-to">
+        </div>
+    </div>
+    <button
+        data-role="aw-layered-nav-price-submit"
+        class="action aw-ln-slider-button"
+        style="<?= /* @noEscape */ $viewModel->isFilterButtonDisabled() ? 'display: none;' : '' ?>">
+        <?= $block->escapeHtml(__('Apply Filter'))?>
+    </button>
+</div>
